@@ -8,8 +8,29 @@ import {
   faPlane,
   faTaxi,
 } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
+import { DateRangePicker } from 'react-date-range';
+import { format } from 'date-fns';
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
 
 const Header = () => {
+  const [date, setDate] = useState({
+    startDate: new Date(),
+    endDate: new Date(),
+    key: 'selection',
+  });
+
+  const handleSelect = (ranges) => {
+    setDate(ranges.selection);
+
+    console.log(ranges);
+  };
+
+  const formattedStartDate = format(date.startDate, 'MMM dd, yyyy');
+  const formattedEndDate = format(date.endDate, 'MMM dd, yyyy');
+  const formattedDateRange = `${formattedStartDate} - ${formattedEndDate}`;
+
   return (
     <div className="header">
       <div className="headerContainer">
@@ -52,7 +73,12 @@ const Header = () => {
           </div>
           <div className="headerSearchItem">
             <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />
-            <span className="headerSearchText">date to date</span>
+            <span className="headerSearchText">{formattedDateRange}</span>
+            <DateRangePicker
+              ranges={[date]}
+              onChange={handleSelect}
+              className="date"
+            />
           </div>
           <div className="headerSearchItem">
             <FontAwesomeIcon icon={faPerson} className="headerIcon" />
