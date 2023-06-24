@@ -15,6 +15,8 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 
 const Header = () => {
+  const [openDate, setOpenDate] = useState(false);
+
   const [date, setDate] = useState({
     startDate: new Date(),
     endDate: new Date(),
@@ -30,6 +32,23 @@ const Header = () => {
   const formattedStartDate = format(date.startDate, 'MMM dd, yyyy');
   const formattedEndDate = format(date.endDate, 'MMM dd, yyyy');
   const formattedDateRange = `${formattedStartDate} - ${formattedEndDate}`;
+
+  const [openOptions, setOpenOptions] = useState(false);
+
+  const [options, setOptions] = useState({
+    adult: 1,
+    children: 0,
+    room: 1,
+  });
+
+  const handleOption = (name, operation) => {
+    setOptions((prev) => {
+      return {
+        ...prev,
+        [name]: operation === 'i' ? options[name] + 1 : options[name] - 1,
+      };
+    });
+  };
 
   return (
     <div className="header">
@@ -56,7 +75,7 @@ const Header = () => {
             <span>Airport taxis</span>
           </div>
         </div>
-        <h1 className="headerTitle">A lifetime of discounts? It's Genious.</h1>
+        <h1 className="headerTitle">A lifetime of discounts? It's Genius.</h1>
         <p className="headerDesc">
           Get rewarded for your travels - unlock instant savings of 10% or more
           with a free nabeelbooking account
@@ -73,16 +92,84 @@ const Header = () => {
           </div>
           <div className="headerSearchItem">
             <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />
-            <span className="headerSearchText">{formattedDateRange}</span>
-            <DateRangePicker
-              ranges={[date]}
-              onChange={handleSelect}
-              className="date"
-            />
+            <span
+              onClick={() => setOpenDate(!openDate)}
+              className="headerSearchText"
+            >
+              {formattedDateRange}
+            </span>
+            {openDate && (
+              <DateRangePicker
+                ranges={[date]}
+                onChange={handleSelect}
+                className="date"
+              />
+            )}
           </div>
           <div className="headerSearchItem">
             <FontAwesomeIcon icon={faPerson} className="headerIcon" />
-            <span className="headerSearchText">2 adults 2 children 1 room</span>
+            <span className="headerSearchText">{`${options.adult}- adult ${options.children}- children ${options.room} - room`}</span>
+            <div className="options">
+              <div className="optionItem">
+                <span className="optionText">Adult</span>
+                <div className="optionCounter">
+                  <button
+                    disabled={options.adult <= 1}
+                    onClick={() => handleOption('adult', 'd')}
+                    className="optionCounterButton"
+                  >
+                    -
+                  </button>
+                  <span className="optionCounterNumber">{options.adult}</span>
+                  <button
+                    onClick={() => handleOption('adult', 'i')}
+                    className="optionCounterButton"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              <div className="optionItem">
+                <span className="optionText">Children</span>
+                <div className="optionCounter">
+                  <button
+                    disabled={options.children <= 0}
+                    className="optionCounterButton"
+                    onClick={() => handleOption('children', 'd')}
+                  >
+                    -
+                  </button>
+                  <span className="optionCounterNumber">
+                    {options.children}
+                  </span>
+                  <button
+                    className="optionCounterButton"
+                    onClick={() => handleOption('children', 'i')}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              <div className="optionItem">
+                <span className="optionText">Rooms</span>
+                <div className="optionCounter">
+                  <button
+                    disabled={options.room <= 1}
+                    onClick={() => handleOption('room', 'd')}
+                    className="optionCounterButton"
+                  >
+                    -
+                  </button>
+                  <span className="optionCounterNumber">{options.room}</span>
+                  <button
+                    onClick={() => handleOption('room', 'i')}
+                    className="optionCounterButton"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="headerSearchItem">
             <button className="headerBtn">Search</button>
