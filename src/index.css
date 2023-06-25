@@ -3,3 +3,9 @@
   margin: 0;
   padding: 0;
 }
+
+:root {
+  --blue: #003580;
+  --lightBlue: #0071c2;
+  --yellow: #febb02;
+}
