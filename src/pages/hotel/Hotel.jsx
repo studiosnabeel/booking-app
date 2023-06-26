@@ -5,8 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import MailList from '../../components/maillist/MailList';
 import Footer from '../../components/footer/Footer';
+import { useState } from 'react';
 
 const Hotel = () => {
+  const [slideNumber, setSlideNumber] = useState(0);
+
   const photos = [
     {
       src: 'https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707778.jpg?k=56ba0babbcbbfeb3d3e911728831dcbc390ed2cb16c51d88159f82bf751d04c6&o=&hp=1',
@@ -34,6 +37,7 @@ const Hotel = () => {
       <Header type="list" />
 
       <div className="hotelContainer">
+        <div className="slider"></div>
         <div className="hotelWrapper">
           <button className="bookNow">Reserve or Book Now!</button>
           <h1 className="hotelTitle">Grand Hotel</h1>
@@ -50,7 +54,12 @@ const Hotel = () => {
           <div className="hotelImages">
             {photos.map((photo, i) => (
               <div className="hotelImgWrapper" key={i}>
-                <img src={photo.src} alt="" className="hotelImg" />
+                <img
+                  onClick={() => setSlideNumber(i)}
+                  src={photo.src}
+                  alt=""
+                  className="hotelImg"
+                />
               </div>
             ))}
           </div>
