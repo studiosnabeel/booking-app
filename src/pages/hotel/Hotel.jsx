@@ -21,6 +21,18 @@ const Hotel = () => {
     setOpen(true);
   };
 
+  const handleMove = (direction) => {
+    let newSlideNumber;
+
+    if (direction === 'l') {
+      newSlideNumber = slideNumber === 0 ? 5 : slideNumber - 1;
+    } else {
+      newSlideNumber = slideNumber === 5 ? 0 : slideNumber + 1;
+    }
+
+    setSlideNumber(newSlideNumber);
+  };
+
   const photos = [
     {
       src: 'https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707778.jpg?k=56ba0babbcbbfeb3d3e911728831dcbc390ed2cb16c51d88159f82bf751d04c6&o=&hp=1',
@@ -50,12 +62,24 @@ const Hotel = () => {
       <div className="hotelContainer">
         {open && (
           <div className="slider">
-            <FontAwesomeIcon icon={faCircleXmark} />
-            <FontAwesomeIcon icon={faCircleArrowLeft} />
+            <FontAwesomeIcon
+              icon={faCircleXmark}
+              className="close"
+              onClick={() => setOpen(false)}
+            />
+            <FontAwesomeIcon
+              icon={faCircleArrowLeft}
+              className="arrow"
+              onClick={() => handleMove('l')}
+            />
             <div className="sliderWrapper">
               <img src={photos[slideNumber].src} alt="" className="sliderImg" />
             </div>
-            <FontAwesomeIcon icon={faCircleArrowRight} />
+            <FontAwesomeIcon
+              icon={faCircleArrowRight}
+              className="arrow"
+              onClick={() => handleMove('r')}
+            />
           </div>
         )}
         <div className="hotelWrapper">
