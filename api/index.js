@@ -18,15 +18,15 @@ const connect = async () => {
   }
 };
 
+mongoose.connection.on('disconnected', () => {
+  console.log('mongoDB disconnected');
+});
+
 //middleware
 app.use('/api/auth', authRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/hotels', hotelsRoute);
 app.use('/api/rooms', roomsRoute);
-
-mongoose.connection.on('disconnected', () => {
-  console.log('mongoDB disconnected');
-});
 
 app.listen(5000, () => {
   connect();
