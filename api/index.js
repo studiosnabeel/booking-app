@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import authRoute from './routes/auth.js';
 
 const app = express();
 dotenv.config();
@@ -14,10 +15,13 @@ const connect = async () => {
   }
 };
 
+//middleware
+
+app.use('/auth', authRoute);
+
 mongoose.connection.on('disconnected', () => {
   console.log('mongoDB disconnected');
 });
-
 
 app.listen(5000, () => {
   connect();
