@@ -14,6 +14,10 @@ const connect = async () => {
   }
 };
 
+mongoose.connection.on('disconnected', () => {
+  console.log('mongoDB disconnected')
+})
+
 app.listen(5000, () => {
   connect();
   console.log('Connected to port 5000 successfully!');
