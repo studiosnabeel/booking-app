@@ -50,7 +50,9 @@ router.get('/:id', async (req, res) => {
 });
 
 //GETALL
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
+  console.log('Hi i am a hotel route');
+  return next();
   try {
     const hotel = await Hotel.find();
     res.status(200).json(hotel);

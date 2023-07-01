@@ -31,6 +31,10 @@ app.use('/api/users', usersRoute);
 app.use('/api/hotels', hotelsRoute);
 app.use('/api/rooms', roomsRoute);
 
+app.use((req, res, next) => {
+  res.send('Hello world!')
+});
+
 app.listen(5000, () => {
   connect();
   console.log('Connected to port 5000 successfully!');
