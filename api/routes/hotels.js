@@ -52,8 +52,6 @@ router.get('/:id', async (req, res) => {
 
 //GETALL
 router.get('/', async (req, res, next) => {
-  const failed = true;
-
   try {
     const hotels = await Hotel.find();
     res.status(200).json(hotels);
