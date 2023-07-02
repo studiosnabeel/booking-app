@@ -51,11 +51,17 @@ router.get('/:id', async (req, res) => {
 
 //GETALL
 router.get('/', async (req, res, next) => {
+  const failed = true;
+  const err = new Error();
+  err.status = 404;
+  err.message = 'Sorry not found';
+  if (failed) return next(err);
+
   try {
-    const hotel = await Hotel.find();
-    res.status(200).json(hotel);
+    const hotels = await Hotel.findById(234324);
+    res.status(200).json(hotels);
   } catch (err) {
-    res.status(500).json(err);
+    next(err);
   }
 });
 
