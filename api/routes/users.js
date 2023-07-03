@@ -17,7 +17,7 @@ router.get('/checkuser/:id', verifyUser, (req, res, next) => {
   res.send('hello user, your logged in and you can delete your account');
 });
 
-router.get('/checkAdmin/:id', verifyAdmin, (req, res, next) => {
+router.get('/checkadmin/:id', verifyAdmin, (req, res, next) => {
   res.send('hello Admin, your logged in and you can delete all account');
 });
 
