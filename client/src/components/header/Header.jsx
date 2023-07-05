@@ -16,14 +16,17 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import { useNavigate } from 'react-router-dom';
 import { SearchContext } from '../../context/SearchContext';
 
+// eslint-disable-next-line react/prop-types
 const Header = ({ type }) => {
   const [openDate, setOpenDate] = useState(false);
 
-  const [dates, setDates] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
-    key: 'selection',
-  });
+  const [dates, setDates] = useState(
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: 'selection',
+    },
+  );
 
   const handleSelect = (ranges) => {
     setDates(ranges.selection);
@@ -59,7 +62,7 @@ const Header = ({ type }) => {
   const { dispatch } = useContext(SearchContext);
 
   const handleSearch = () => {
-    dispatch({ type: 'NEW_SEARCH', payload:{destination, dates, options} });
+    dispatch({ type: 'NEW_SEARCH', payload: { destination, dates, options } });
     navigate('/hotels', { state: { destination, dates, options } });
   };
 
