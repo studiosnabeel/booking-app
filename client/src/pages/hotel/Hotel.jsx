@@ -13,6 +13,8 @@ import Footer from '../../components/footer/Footer';
 import { useState } from 'react';
 import useFetch from '../../hooks/useFetch';
 import { useLocation } from 'react-router-dom';
+import { SearchContext } from '../../context/SearchContext';
+import { useContext } from 'react';
 
 const Hotel = () => {
   const location = useLocation();
@@ -41,6 +43,17 @@ const Hotel = () => {
   const { data, loading, error } = useFetch(
     `http://localhost:5000/api/hotels/find/${id}`
   );
+
+  const { dates } = useContext(SearchContext);
+
+  const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+  function dayDifference(date1, date2) {
+    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
+    return diffDays;
+  }
+
+  console.log(dates);
 
   return (
     <div>
