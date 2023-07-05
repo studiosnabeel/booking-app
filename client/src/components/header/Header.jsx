@@ -8,30 +8,31 @@ import {
   faPlane,
   faTaxi,
 } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { DateRangePicker } from 'react-date-range';
 import { format } from 'date-fns';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { useNavigate } from 'react-router-dom';
+import { SearchContext } from '../../context/SearchContext';
 
 const Header = ({ type }) => {
   const [openDate, setOpenDate] = useState(false);
 
-  const [date, setDate] = useState({
+  const [dates, setDates] = useState({
     startDate: new Date(),
     endDate: new Date(),
     key: 'selection',
   });
 
   const handleSelect = (ranges) => {
-    setDate(ranges.selection);
+    setDates(ranges.selection);
 
     console.log(ranges);
   };
 
-  const formattedStartDate = format(date.startDate, 'MMM dd, yyyy');
-  const formattedEndDate = format(date.endDate, 'MMM dd, yyyy');
+  const formattedStartDate = format(dates.startDate, 'MMM dd, yyyy');
+  const formattedEndDate = format(dates.endDate, 'MMM dd, yyyy');
   const formattedDateRange = `${formattedStartDate} - ${formattedEndDate}`;
 
   const [openOptions, setOpenOptions] = useState(false);
@@ -55,8 +56,11 @@ const Header = ({ type }) => {
 
   const navigate = useNavigate();
 
+  const { dispatch } = useContext(SearchContext);
+
   const handleSearch = () => {
-    navigate('/hotels', { state: { destination, date, options } });
+    dispatch({ type: 'NEW_SEARCH', payload:{destination, dates, options} });
+    navigate('/hotels', { state: { destination, dates, options } });
   };
 
   return (
@@ -121,7 +125,7 @@ const Header = ({ type }) => {
                 </span>
                 {openDate && (
                   <DateRangePicker
-                    ranges={[date]}
+                    ranges={[dates]}
                     onChange={handleSelect}
                     className="date"
                     minDate={new Date()}
