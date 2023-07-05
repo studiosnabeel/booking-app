@@ -11,7 +11,7 @@ import useFetch from '../../hooks/useFetch';
 const List = () => {
   const location = useLocation();
   const [destination] = useState(location.state.destination);
-  const [date, setDate] = useState(location.state.date);
+  const [dates, setDates] = useState(location.state.dates);
   const [openDate, setOpenDate] = useState(false);
   const [options] = useState(location.state.options);
   const [min, setMin] = useState(undefined);
@@ -19,8 +19,8 @@ const List = () => {
 
   // console.log(location);
 
-  const formattedStartDate = format(date.startDate, 'MMM dd, yyyy');
-  const formattedEndDate = format(date.endDate, 'MMM dd, yyyy');
+  const formattedStartDate = format(dates.startDate, 'MMM dd, yyyy');
+  const formattedEndDate = format(dates.endDate, 'MMM dd, yyyy');
   const formattedDateRange = `${formattedStartDate} - ${formattedEndDate}`;
 
   const { data, loading, error, reFetch } = useFetch(
@@ -52,9 +52,9 @@ const List = () => {
               </span>
               {openDate && (
                 <DateRangePicker
-                  onChange={(item) => setDate([item.selection])}
+                  onChange={(item) => setDates([item.selection])}
                   minDate={new Date()}
-                  ranges={[date]}
+                  ranges={[dates]}
                 />
               )}
             </div>
