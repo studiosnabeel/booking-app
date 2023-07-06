@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import './login.css';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -10,6 +11,8 @@ const Login = () => {
   });
 
   const { loading, error, dispatch } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -24,12 +27,11 @@ const Login = () => {
         credentials
       );
       dispatch({ type: 'LOGIN_SUCCESS', payload: res.data });
+      navigate('/');
     } catch (err) {
       dispatch({ type: 'LOGIN_FAILURE', payload: err.response.data });
     }
   };
-  console.log(Login);
-
 
   return (
     <div className="login">
