@@ -15,6 +15,7 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { useNavigate } from 'react-router-dom';
 import { SearchContext } from '../../context/SearchContext';
+import { AuthContext } from '../../context/AuthContext';
 
 // eslint-disable-next-line react/prop-types
 const Header = ({ type }) => {
@@ -58,6 +59,8 @@ const Header = ({ type }) => {
   const [destination, setDestination] = useState('');
 
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+
 
   const { dispatch } = useContext(SearchContext);
 
@@ -104,7 +107,7 @@ const Header = ({ type }) => {
               Get rewarded for your travels - unlock instant savings of 10% or
               more with a free nabeelbooking account
             </p>
-            <button className="headerBtn">Sign in / Register</button>
+            {!user && <button className="headerBtn">Sign in / Register</button>}
 
             {/* Header Search Section */}
 
